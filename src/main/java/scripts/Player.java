@@ -1,4 +1,4 @@
-package components;
+package scripts;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,13 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player extends Rectangle{
-    public Dimension maxPosition = new Dimension(640,640);
+    public Dimension maxPosition = new Dimension(645,620);
     private enum Direction{UP,DOWN,LEFT,RIGHT,NONE}
     private Image sprite;
     private Direction vectorX = Direction.NONE;
     private Direction vectorY = Direction.NONE;
-    private Direction vector = Direction.NONE;
     private float speed = 2;
+    private int health = 5;
     public Player() {
         super(280,300, 30,30);
         loadSprite("src/main/java/assets/sprites/square_man_normal.png");
@@ -30,6 +30,13 @@ public class Player extends Rectangle{
         this.x = x;
         this.y = x;
     }
+    public int getHealth() {
+        return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public float getSpeed() {
         return speed;
     }
@@ -62,11 +69,29 @@ public class Player extends Rectangle{
         changeLookingDirection();
     }
     private void changeLookingDirection(){
-        switch (vector){
-            case DOWN -> loadSprite("src/main/java/assets/sprites/square_man_going_up.png");
-            case UP -> loadSprite("src/main/java/assets/sprites/square_man_going_down.png");
-            case LEFT -> loadSprite("src/main/java/assets/sprites/square_man_normal_left.png");
-            case RIGHT -> loadSprite("src/main/java/assets/sprites/square_man_normal.png");
+        if(pressedKeys.isEmpty()){
+            if(vectorX == Direction.RIGHT){
+                loadSprite("src/main/java/assets/sprites/square_man_normal.png");
+            }
+            else if(vectorX == Direction.LEFT){
+                loadSprite("src/main/java/assets/sprites/square_man_normal_left.png");
+            }
+        }
+        else{
+            switch (pressedKeys.get(pressedKeys.size()-1)){
+                case KeyEvent.VK_A:
+                    loadSprite("src/main/java/assets/sprites/square_man_normal_left.png");
+                    break;
+                case KeyEvent.VK_D:
+                    loadSprite("src/main/java/assets/sprites/square_man_normal.png");
+                    break;
+                case KeyEvent.VK_W:
+                    loadSprite("src/main/java/assets/sprites/square_man_going_up.png");
+                    break;
+                case KeyEvent.VK_S:
+                    loadSprite("src/main/java/assets/sprites/square_man_going_down.png");
+                    break;
+            }
         }
     }
     public Image getSprite() {
@@ -81,16 +106,16 @@ public class Player extends Rectangle{
             pressedKeys.add(keycode);
 
         if(keycode == KeyEvent.VK_A){
-            vectorX = Direction.LEFT; vector = Direction.LEFT;
+            vectorX = Direction.LEFT;
         }
         else if(keycode  == KeyEvent.VK_D){
-            vectorX = Direction.RIGHT; vector = Direction.RIGHT;
+            vectorX = Direction.RIGHT;
         }
         else if(keycode  == KeyEvent.VK_W){
-            vectorY = Direction.DOWN; vector = Direction.DOWN;
+            vectorY = Direction.DOWN;
         }
         else if(keycode  == KeyEvent.VK_S){
-            vectorY = Direction.UP; vector = Direction.UP;
+            vectorY = Direction.UP;
         }
     }
     public void keyReleased(KeyEvent e) {

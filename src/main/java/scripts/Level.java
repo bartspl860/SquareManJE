@@ -1,4 +1,4 @@
-package components;
+package scripts;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -7,7 +7,9 @@ public class Level {
     private String name;
     private int number;
     private ArrayList<Wall> walls = new ArrayList<Wall>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Point playerStartPosition = new Point(0,0);
+    private Finish finish;
     public void addWall(Wall w){
         walls.add(w);
     }
@@ -39,40 +41,44 @@ public class Level {
         walls.remove(n);
         walls.add(w);
     }
-
+    public void addFinish(int x, int y, int w, int h, Color c){
+        finish = new Finish(x*30,y*30,w*30,h*30,c);
+    }
+    public void addEnemy(Enemy e){
+        enemies.add(e);
+    }
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
     public ArrayList<Wall> getWalls() {
         return walls;
     }
-
     public int getNumber() {
         return number;
     }
-
+    public Finish getFinish() {
+        return finish;
+    }
     private static int instanceCounter;
     static {
         instanceCounter = 1;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Level(){
         number = instanceCounter++;
     }
-
     public Level(String name) {
         this();
         this.name = name;
     }
     public void setPlayerStartPosition(Point sp){
-        this.playerStartPosition = sp;
+        this.playerStartPosition = new Point(sp.x*30, sp.y*30);
     }
-
     public Point getPlayerStartPosition() {
         return playerStartPosition;
     }

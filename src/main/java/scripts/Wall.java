@@ -1,4 +1,4 @@
-package components;
+package scripts;
 
 import java.awt.*;
 
