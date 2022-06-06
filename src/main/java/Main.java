@@ -34,9 +34,9 @@ public class Main extends JFrame {
 
         var level = new Level("Start");
         level.addWall(0,3,15, Level.Axis.X,wallColor);
-        level.addWall(0,6,10, Level.Axis.X,wallColor);
+        level.addWall(0,7,10, Level.Axis.X,wallColor);
         level.addWall(15,3,8, Level.Axis.Y,wallColor);
-        level.addWall(10,6,5, Level.Axis.Y,wallColor);
+        level.addWall(10,7,4, Level.Axis.Y,wallColor);
         level.addWall(1,11,10, Level.Axis.X,wallColor);
         level.addWall(15,11,5, Level.Axis.X,wallColor);
         level.addWall(1,18,19, Level.Axis.X,wallColor);
@@ -44,7 +44,8 @@ public class Main extends JFrame {
         level.addWall(1,12,2, Level.Axis.Y,wallColor);
         level.addWall(1,16,2, Level.Axis.Y,wallColor);
         level.addFinish(1,14,1,2,Color.CYAN);
-        level.setPlayerStartPosition(new Point(0,4));
+        level.addCoin(7,5);
+        level.setPlayerStartPosition(new Point(1,5));
 
         {
             var steps = new ArrayList<Step>();
@@ -90,6 +91,8 @@ public class Main extends JFrame {
         level2.addWall(12,12,7, Level.Axis.X,wallColor);
         level2.addWall(2,9,3, Level.Axis.Y,wallColor);
         level2.addWall(18,9,3, Level.Axis.Y,wallColor);
+        level2.addHealthPack(3,10);
+        level2.addHealthPack(17,10);
         level2.setPlayerStartPosition(new Point(10,4));
 
         {

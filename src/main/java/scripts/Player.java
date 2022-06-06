@@ -13,7 +13,8 @@ public class Player extends Rectangle{
     private Direction vectorX = Direction.NONE;
     private Direction vectorY = Direction.NONE;
     private float speed = 2;
-    private int health = 5;
+    private int health = 3;
+    private int coins = 0;
     public Player() {
         super(280,300, 30,30);
         loadSprite("src/main/java/assets/sprites/square_man_normal.png");
@@ -40,11 +41,26 @@ public class Player extends Rectangle{
         this.health--;
     }
     public void heal(){
-        this.health++;
+        if(health < 3)
+            this.health++;
     }
     public void restoreHealth(){
-        this.health = 5;
+        this.health = 3;
     }
+    public void addCoin(){
+        coins++;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+    public void resetCoins(){
+        coins = 0;
+    }
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
     public float getSpeed() {
         return speed;
     }
