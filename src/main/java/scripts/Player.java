@@ -36,7 +36,15 @@ public class Player extends Rectangle{
     public void setHealth(int health) {
         this.health = health;
     }
-
+    public void getDamage(){
+        this.health--;
+    }
+    public void heal(){
+        this.health++;
+    }
+    public void restoreHealth(){
+        this.health = 5;
+    }
     public float getSpeed() {
         return speed;
     }

@@ -47,7 +47,7 @@ public class Board extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //drawNet(g);
+        drawNet(g);
         doDrawing(g);
 
         Toolkit.getDefaultToolkit().sync();
@@ -146,20 +146,31 @@ public class Board extends JPanel implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        var level = levels.get(currentLevel);
 
         player.move();
 
-        for(var enemy : levels.get(currentLevel).getEnemies()){
+        for(var enemy : level.getEnemies()){
             enemy.move();
+            if(player.isColliding(enemy)){
+                var startPosition = level.getPlayerStartPosition();
+                player.x = startPosition.x;
+                player.y = startPosition.y;
+                player.getDamage();
+                if(player.getHealth() < 1){
+                    loadLevel(0);
+                    player.restoreHealth();
+                }
+            }
         }
 
-        for (var wall : levels.get(currentLevel).getWalls()){
+        for (var wall : level.getWalls()){
            if(player.isColliding(wall)){
                player.resolveCollision(wall);
            }
         }
 
-        var finish = levels.get(currentLevel).getFinish();
+        var finish = level.getFinish();
         if(finish!=null && player.isColliding(finish)){
             loadLevel(currentLevel+1);
         }
@@ -174,6 +185,12 @@ public class Board extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_1 -> loadLevel(0);
+                case KeyEvent.VK_2 -> loadLevel(1);
+                case KeyEvent.VK_3 -> loadLevel(2);
+                case KeyEvent.VK_4 -> loadLevel(3);
+            }
         }
     }
 }

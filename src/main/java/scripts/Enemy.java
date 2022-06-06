@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class Enemy extends Rectangle {
+    public boolean isRevarsable = true;
     private int speed = 2;
     private Image sprite;
     private ArrayList<Step> steps = new ArrayList<>();
@@ -19,6 +20,10 @@ public class Enemy extends Rectangle {
         this(x,y);
         this.steps = s;
         currentStep = 0;
+    }
+    public Enemy(int x, int y, ArrayList<Step> s, boolean r){
+        this(x,y,s);
+        isRevarsable = r;
     }
     private void loadSprite(String path) {
         ImageIcon ii = new ImageIcon(path);
@@ -49,6 +54,7 @@ public class Enemy extends Rectangle {
 
         switch (step.getDir()) {
             case VERTICAL -> {
+                //this.loadSprite("src/main/java/assets/sprites/enemy_going_up.png");
                 if (step.getStart() < step.getEnd()) {
                     if (y < step.getEnd()) {
                         y += speed;
@@ -65,6 +71,7 @@ public class Enemy extends Rectangle {
                 }
             }
             case HORIZONTAL -> {
+                //this.loadSprite("src/main/java/assets/sprites/enemy_normal.png");
                 if (step.getStart() < step.getEnd()) {
                     if (x < step.getEnd()) {
                         x += speed;
@@ -81,6 +88,15 @@ public class Enemy extends Rectangle {
             }
         }
         if (stepEnded) {
+            if(!isRevarsable){
+                currentStep++;
+                if (currentStep > steps.size() - 1) {
+                    currentStep = 0;
+                }
+                stepEnded = false;
+                return;
+            }
+
             if (!isReversed) {
                 currentStep++;
                 if (currentStep > steps.size() - 1) {

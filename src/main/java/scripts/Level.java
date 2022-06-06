@@ -71,6 +71,8 @@ public class Level {
     }
     public Level(){
         number = instanceCounter++;
+        this.addWall(0,0,22, Level.Axis.X,Color.WHITE);
+        this.addWall(0,1,22, Level.Axis.X,Color.WHITE);
     }
     public Level(String name) {
         this();

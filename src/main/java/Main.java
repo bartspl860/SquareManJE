@@ -43,23 +43,39 @@ public class Main extends JFrame {
         level.addWall(19,12,6, Level.Axis.Y,wallColor);
         level.addWall(1,12,2, Level.Axis.Y,wallColor);
         level.addWall(1,16,2, Level.Axis.Y,wallColor);
-        level.addWall(0,0,21, Level.Axis.X,Color.WHITE);
-        level.addWall(0,1,21, Level.Axis.X,Color.WHITE);
         level.addFinish(1,14,1,2,Color.CYAN);
         level.setPlayerStartPosition(new Point(0,4));
 
-        var steps = new ArrayList<Step>();
-        steps.add(new Step(Step.Alignment.HORIZONTAL, 3, 13));
-        steps.add(new Step(Step.Alignment.VERTICAL, 14, 5));
-
-
-        var enemy = new Enemy(3,14, steps);
-        level.addEnemy(enemy);
-
-
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 3, 17));
+            steps.add(new Step(Step.Alignment.VERTICAL, 13, 16));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 17, 3));
+            steps.add(new Step(Step.Alignment.VERTICAL, 16, 13));
+            var enemy = new Enemy(3,13, steps, false);
+            level.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 17, 3));
+            steps.add(new Step(Step.Alignment.VERTICAL, 16, 13));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 3, 17));
+            steps.add(new Step(Step.Alignment.VERTICAL, 13, 16));
+            var enemy = new Enemy(17,16, steps, false);
+            level.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 14,11));
+            steps.add(new Step(Step.Alignment.VERTICAL, 11,9));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 11,14));
+            steps.add(new Step(Step.Alignment.VERTICAL, 8,6));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 14,11));
+            var enemy = new Enemy(14,11,steps);
+            level.addEnemy(enemy);
+        }
 
         board.levels.add(level);
-
 
         var level2 = new Level("Poziom 2");
         level2.addWall(12,3,6, Level.Axis.Y,wallColor);
@@ -74,8 +90,6 @@ public class Main extends JFrame {
         level2.addWall(12,12,7, Level.Axis.X,wallColor);
         level2.addWall(2,9,3, Level.Axis.Y,wallColor);
         level2.addWall(18,9,3, Level.Axis.Y,wallColor);
-        level2.addWall(0,0,21, Level.Axis.X,Color.WHITE);
-        level2.addWall(0,1,21, Level.Axis.X,Color.WHITE);
         level2.setPlayerStartPosition(new Point(10,4));
         board.levels.add(level2);
 
@@ -110,8 +124,6 @@ public class Main extends JFrame {
         level3.addWall(14,15,3, Level.Axis.Y,wallColor);
         level3.addWall(8,17,4, Level.Axis.Y,wallColor);
         level3.addWall(12,17,4, Level.Axis.Y,wallColor);
-        level3.addWall(0,0,21, Level.Axis.X,Color.WHITE);
-        level3.addWall(0,1,21, Level.Axis.X,Color.WHITE);
         level3.setPlayerStartPosition(new Point(0,2));
         level3.addFinish(19,16,1,3,Color.CYAN);
 
@@ -136,14 +148,8 @@ public class Main extends JFrame {
         endLevel.addWall(9,16,3, Level.Axis.X,wallColor);
         endLevel.addWall(8,15,1, Level.Axis.X,wallColor);
         endLevel.addWall(12,15,1, Level.Axis.X,wallColor);
-        endLevel.addWall(0,0,21, Level.Axis.X,Color.WHITE);
-        endLevel.addWall(0,1,21, Level.Axis.X,Color.WHITE);
         endLevel.setPlayerStartPosition(new Point(10,14));
         endLevel.addFinish(9,19,3,1,Color.cyan);
-
-
-
-
         board.levels.add(endLevel);
 
         board.loadLevel(0);
