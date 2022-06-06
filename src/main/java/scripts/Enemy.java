@@ -54,15 +54,15 @@ public class Enemy extends Rectangle {
 
         switch (step.getDir()) {
             case VERTICAL -> {
-                //this.loadSprite("src/main/java/assets/sprites/enemy_going_up.png");
                 if (step.getStart() < step.getEnd()) {
+                    this.loadSprite("src/main/java/assets/sprites/enemy_going_down.png");
                     if (y < step.getEnd()) {
                         y += speed;
                     } else {
                         stepEnded = true;
                     }
-
                 } else {
+                    this.loadSprite("src/main/java/assets/sprites/enemy_going_up.png");
                     if (y > step.getEnd()) {
                         y -= speed;
                     } else {
@@ -71,8 +71,8 @@ public class Enemy extends Rectangle {
                 }
             }
             case HORIZONTAL -> {
-                //this.loadSprite("src/main/java/assets/sprites/enemy_normal.png");
                 if (step.getStart() < step.getEnd()) {
+                    this.loadSprite("src/main/java/assets/sprites/enemy_right.png");
                     if (x < step.getEnd()) {
                         x += speed;
                     } else {
@@ -80,6 +80,7 @@ public class Enemy extends Rectangle {
                     }
                 } else {
                     if (x > step.getEnd()) {
+                        this.loadSprite("src/main/java/assets/sprites/enemy_left.png");
                         x -= speed;
                     } else {
                         stepEnded = true;

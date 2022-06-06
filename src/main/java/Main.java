@@ -91,6 +91,37 @@ public class Main extends JFrame {
         level2.addWall(2,9,3, Level.Axis.Y,wallColor);
         level2.addWall(18,9,3, Level.Axis.Y,wallColor);
         level2.setPlayerStartPosition(new Point(10,4));
+
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 9, 11));
+            steps.add(new Step(Step.Alignment.VERTICAL, 9, 11));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 11, 9));
+            steps.add(new Step(Step.Alignment.VERTICAL, 11, 9));
+            var enemy = new Enemy(10,9,steps,false);
+            level2.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.VERTICAL, 9, 11));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 8, 6));
+            steps.add(new Step(Step.Alignment.VERTICAL, 11, 9));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 6, 4));
+            steps.add(new Step(Step.Alignment.VERTICAL, 9, 11));
+            var enemy = new Enemy(8,9,steps);
+            level2.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.VERTICAL, 11, 9));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 12, 14));
+            steps.add(new Step(Step.Alignment.VERTICAL, 9, 11));
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 14, 16));
+            steps.add(new Step(Step.Alignment.VERTICAL, 11, 9));
+            var enemy = new Enemy(12,11,steps);
+            level2.addEnemy(enemy);
+        }
+
         board.levels.add(level2);
 
         var level3 = new Level("Ostatni");
@@ -124,6 +155,7 @@ public class Main extends JFrame {
         level3.addWall(14,15,3, Level.Axis.Y,wallColor);
         level3.addWall(8,17,4, Level.Axis.Y,wallColor);
         level3.addWall(12,17,4, Level.Axis.Y,wallColor);
+        level3.addWall(21,4,20, Level.Axis.Y,wallColor);
         level3.setPlayerStartPosition(new Point(0,2));
         level3.addFinish(19,16,1,3,Color.CYAN);
 
