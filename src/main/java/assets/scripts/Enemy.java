@@ -1,10 +1,8 @@
-package scripts;
+package assets.scripts;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 public class Enemy extends Rectangle {
     public boolean isRevarsable = true;

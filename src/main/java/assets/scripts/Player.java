@@ -1,4 +1,4 @@
-package scripts;
+package assets.scripts;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +50,6 @@ public class Player extends Rectangle{
     public void addCoin(){
         coins++;
     }
-
     public int getCoins() {
         return coins;
     }
@@ -60,7 +59,6 @@ public class Player extends Rectangle{
     public void setCoins(int coins) {
         this.coins = coins;
     }
-
     public float getSpeed() {
         return speed;
     }

@@ -1,4 +1,4 @@
-package scripts;
+package assets.scripts;
 
 import java.awt.*;
 

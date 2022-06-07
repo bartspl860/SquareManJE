@@ -1,4 +1,4 @@
-package scripts;
+package assets.scripts;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ public class Level {
     private String name;
     private int number;
     private ArrayList<Wall> walls = new ArrayList<Wall>();
+    private ArrayList<SecretWall> secretWalls = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Healthpack> healthpacks = new ArrayList<>();
     private ArrayList<Healthpack> hiddenHealthpacks = new ArrayList<>();
@@ -38,6 +39,20 @@ public class Level {
             }
         }
     }
+    public void addSecretWall(int x, int y, int it, Axis ax, Color c){
+        x *= 30;
+        y *= 30;
+        if(ax == Axis.X){
+            for(int i=0;i<it*30;i+=30){
+                secretWalls.add(new SecretWall(x+i,y,c));
+            }
+        }
+        else{
+            for(int i=0;i<it*30;i+=30) {
+                secretWalls.add(new SecretWall(x,y+i,c));
+            }
+        }
+    }
     public void addFinish(int x, int y, int w, int h, Color c){
         finish = new Finish(x*30,y*30,w*30,h*30,c);
     }
@@ -58,6 +73,11 @@ public class Level {
     public ArrayList<Wall> getWalls() {
         return walls;
     }
+
+    public ArrayList<SecretWall> getSecretWalls() {
+        return secretWalls;
+    }
+
     public Finish getFinish() {
         return finish;
     }

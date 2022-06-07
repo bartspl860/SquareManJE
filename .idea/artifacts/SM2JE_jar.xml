@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SM2JE:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SM2JE_jar</output-path>
+    <root id="archive" name="SM2JE.jar">
+      <element id="module-output" name="SM2JE" />
+    </root>
+  </artifact>
+</component>

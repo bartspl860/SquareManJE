@@ -1,4 +1,4 @@
-package scripts;
+package assets.scripts;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -24,8 +24,10 @@ public class AudioManager {
         var clip = clips.get(name);
         if (clip == null)
             return;
-        clip.setFramePosition(0);
-        clip.start();
+        var localClip = clip;
+        localClip.stop();
+        localClip.setFramePosition(0);
+        localClip.start();
     }
 
     public void playLoopClip(String name) {

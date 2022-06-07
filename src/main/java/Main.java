@@ -1,8 +1,7 @@
-import com.sun.jdi.event.StepEvent;
-import scripts.Board;
-import scripts.Enemy;
-import scripts.Level;
-import scripts.Step;
+import assets.scripts.Board;
+import assets.scripts.Enemy;
+import assets.scripts.Level;
+import assets.scripts.Step;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +44,8 @@ public class Main extends JFrame {
         level.addWall(1,16,2, Level.Axis.Y,wallColor);
         level.addFinish(1,14,1,2,Color.CYAN);
         level.addCoin(7,5);
+        level.addCoin(17,16);
+        level.addCoin(3,13);
         level.setPlayerStartPosition(new Point(1,5));
 
         {
@@ -151,7 +152,7 @@ public class Main extends JFrame {
         level3.addWall(5,12,2, Level.Axis.Y,wallColor);
         level3.addWall(1,9,4, Level.Axis.X,wallColor);
         level3.addWall(8,13,2, Level.Axis.X,wallColor);
-        level3.addWall(9,12,2, Level.Axis.X,Color.GREEN);
+        level3.addSecretWall(9,12,2, Level.Axis.X, wallColor);
         level3.addWall(10,11,2, Level.Axis.X,wallColor);
         level3.addWall(11,10,2, Level.Axis.X,wallColor);
         level3.addWall(12,9,2, Level.Axis.X,wallColor);
@@ -163,9 +164,22 @@ public class Main extends JFrame {
         level3.addWall(8,17,4, Level.Axis.Y,wallColor);
         level3.addWall(12,17,4, Level.Axis.Y,wallColor);
         level3.addWall(21,4,20, Level.Axis.Y,wallColor);
-        level3.setPlayerStartPosition(new Point(6,7));
+        level3.addCoin(19,13);
+        level3.addCoin(16,13);
+        level3.addCoin(13,12);
+        level3.addCoin(13,13);
+        level3.addCoin(14,12);
+        level3.addCoin(14,13);
+        level3.addCoin(8,9);
+        level3.addCoin(4,6);
+        level3.addCoin(4,8);
+        level3.addCoin(8,16);
+        level3.addCoin(12,16);
+        level3.addHealthPack(13,4);
+        level3.addHealthPack(9,5);
+        level3.addHealthPack(3,7);
+        level3.setPlayerStartPosition(new Point(0,3));
         level3.addFinish(19,16,1,3,Color.CYAN);
-
         {
             var steps = new ArrayList<Step>();
             steps.add(new Step(Step.Alignment.HORIZONTAL, 16, 19));
@@ -192,7 +206,6 @@ public class Main extends JFrame {
 
             level3.addEnemy(enemy);
         }
-
         {
             var steps = new ArrayList<Step>();
             steps.add(new Step(Step.Alignment.HORIZONTAL,6,12));
@@ -203,6 +216,22 @@ public class Main extends JFrame {
             var steps = new ArrayList<Step>();
             steps.add(new Step(Step.Alignment.HORIZONTAL,6,10));
             var enemy = new Enemy(6,10,steps);
+            level3.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,0,4));
+            steps.add(new Step(Step.Alignment.VERTICAL,10,13));
+            steps.add(new Step(Step.Alignment.HORIZONTAL,4,0));
+            steps.add(new Step(Step.Alignment.VERTICAL,13,10));
+            var enemy = new Enemy(0,10,steps, false);
+            level3.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,5,1));
+            steps.add(new Step(Step.Alignment.VERTICAL,16,19));
+            var enemy = new Enemy(5,16,steps);
             level3.addEnemy(enemy);
         }
 
@@ -229,6 +258,14 @@ public class Main extends JFrame {
         endLevel.addWall(12,15,1, Level.Axis.X,wallColor);
         endLevel.setPlayerStartPosition(new Point(10,14));
         endLevel.addFinish(9,19,3,1,Color.cyan);
+
+        for(int y=0;y<20;y++){
+            for(int x=0;x<21;x++){
+                if(x == 0 || y == 2 || x == 20 || y == 19)
+                    endLevel.addCoin(x,y);
+            }
+        }
+
         board.levels.add(endLevel);
 
         board.loadLevel(0);

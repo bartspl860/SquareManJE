@@ -1,15 +1,13 @@
-package scripts;
+package assets.scripts;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.util.*;
 
 public class Board extends JPanel implements ActionListener {
@@ -62,13 +60,15 @@ public class Board extends JPanel implements ActionListener {
         audioManager.addClip("applause", "src/main/java/assets/sounds/applause.wav");
         audioManager.addClip("laugh", "src/main/java/assets/sounds/enemy_laugh.wav");
         audioManager.addClip("coin", "src/main/java/assets/sounds/coin.wav");
+        audioManager.addClip("fail", "src/main/java/assets/sounds/total-fail.wav");
+        audioManager.addClip("magic", "src/main/java/assets/sounds/magic.wav");
         audioManager.playLoopClip("ukulele");
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        drawNet(g);
+        //drawNet(g);
         doDrawing(g);
 
         Toolkit.getDefaultToolkit().sync();
@@ -78,11 +78,11 @@ public class Board extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         drawPlayer(g2d);
+        drawCoins(g2d);
         drawEnemies(g2d);
         drawWalls(g2d);
         drawFinish(g2d);
         drawHealthpacks(g2d);
-        drawCoins(g2d);
         drawGUI(g2d);
     }
     private void drawNet(Graphics g){
@@ -141,6 +141,17 @@ public class Board extends JPanel implements ActionListener {
                 this);
     }
     private void drawWalls(Graphics2D g2d){
+        for(var wall : levels.get(currentLevel).getSecretWalls()) {
+            if(wall.transparentEffectActive)
+                continue;
+            g2d.setColor(Color.BLACK);
+            g2d.drawRect(
+                    wall.x-1,
+                    wall.y-1,
+                    wall.width+1,
+                    wall.height+1
+            );
+        }
         for(var wall : levels.get(currentLevel).getWalls()) {
             g2d.setColor(Color.BLACK);
             g2d.drawRect(
@@ -148,6 +159,15 @@ public class Board extends JPanel implements ActionListener {
                     wall.y-1,
                     wall.width+1,
                     wall.height+1
+            );
+        }
+        for(var wall : levels.get(currentLevel).getSecretWalls()){
+            g2d.setColor(wall.getColor());
+            g2d.fillRect(
+                    wall.x,
+                    wall.y,
+                    wall.width,
+                    wall.height
             );
         }
         for(var wall : levels.get(currentLevel).getWalls()){
@@ -193,6 +213,7 @@ public class Board extends JPanel implements ActionListener {
                     this);
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -214,6 +235,7 @@ public class Board extends JPanel implements ActionListener {
                         ()->setBackground(new Color(238,130,238)));
                 if(player.getHealth() < 1){
                     loadLevel(0);
+                    audioManager.playClip("fail");
                     resetGame();
                 }
             }
@@ -257,6 +279,27 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
+        SecretWall.soundEffectActive = false;
+        for(var wall : level.getSecretWalls()){
+            if(player.isColliding(wall)){
+                wall.makeTransparent();
+                wall.transparentEffectActive = true;
+                SecretWall.soundEffectActive = true;
+            }
+            else{
+                wall.makeVisible();
+                wall.transparentEffectActive = false;
+            }
+        }
+        if(SecretWall.soundEffectActive){
+            if(!SecretWall.soundHasBeenPlayed){
+                audioManager.playClip("magic");
+                SecretWall.soundHasBeenPlayed = true;
+            }
+        }
+        else {
+            SecretWall.soundHasBeenPlayed = false;
+        }
     }
     public void resetGame(){
         for(var localLevel : levels){

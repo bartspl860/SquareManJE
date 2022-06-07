@@ -1,4 +1,4 @@
-package scripts;
+package assets.scripts;
 
 public class Step {
     public enum Alignment {VERTICAL, HORIZONTAL}
