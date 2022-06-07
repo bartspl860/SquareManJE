@@ -37,8 +37,17 @@ public class Enemy extends Rectangle {
     public int getSpeed() {
         return speed;
     }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public Image getSprite() {
         return sprite;
+    }
+    public void adjustPosition(int x, int y){
+        this.x+=x;
+        this.y+=y;
     }
     private boolean isReversed = false;
     public void reverseSteps(){

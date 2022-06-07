@@ -93,6 +93,10 @@ public class Main extends JFrame {
         level2.addWall(18,9,3, Level.Axis.Y,wallColor);
         level2.addHealthPack(3,10);
         level2.addHealthPack(17,10);
+        level2.addCoin(3,9);
+        level2.addCoin(3,11);
+        level2.addCoin(17,9);
+        level2.addCoin(17,11);
         level2.setPlayerStartPosition(new Point(10,4));
 
         {
@@ -159,8 +163,48 @@ public class Main extends JFrame {
         level3.addWall(8,17,4, Level.Axis.Y,wallColor);
         level3.addWall(12,17,4, Level.Axis.Y,wallColor);
         level3.addWall(21,4,20, Level.Axis.Y,wallColor);
-        level3.setPlayerStartPosition(new Point(0,2));
+        level3.setPlayerStartPosition(new Point(6,7));
         level3.addFinish(19,16,1,3,Color.CYAN);
+
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL, 16, 19));
+            var enemy = new Enemy(16,7, steps);
+            level3.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,16,19));
+            steps.add(new Step(Step.Alignment.VERTICAL,10,13));
+            steps.add(new Step(Step.Alignment.HORIZONTAL,19,16));
+            steps.add(new Step(Step.Alignment.VERTICAL,13,10));
+            var enemy = new Enemy(16,10,steps,false);
+
+            level3.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,20,3));
+
+            var enemy = new Enemy(20,3,steps);
+            enemy.adjustPosition(0,-15);
+            enemy.setSpeed(4);
+
+            level3.addEnemy(enemy);
+        }
+
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,6,12));
+            var enemy = new Enemy(6,8,steps);
+            level3.addEnemy(enemy);
+        }
+        {
+            var steps = new ArrayList<Step>();
+            steps.add(new Step(Step.Alignment.HORIZONTAL,6,10));
+            var enemy = new Enemy(6,10,steps);
+            level3.addEnemy(enemy);
+        }
 
         board.levels.add(level3);
 

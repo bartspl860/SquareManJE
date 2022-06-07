@@ -306,5 +306,4 @@ public class Board extends JPanel implements ActionListener {
             void execute();
         }
     }
-
 }
