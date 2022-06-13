@@ -13,8 +13,8 @@ public class Level {
     private ArrayList<Healthpack> hiddenHealthpacks = new ArrayList<>();
     private ArrayList<Coin> coins = new ArrayList<>();
     private ArrayList<Coin> hiddenCoins = new ArrayList<>();
-    private ArrayList<SupriseItem> suprises = new ArrayList<>();
-    private ArrayList<SupriseItem> hiddenSuprises = new ArrayList<>();
+    private ArrayList<SurpriseItem> suprises = new ArrayList<>();
+    private ArrayList<SurpriseItem> hiddenSuprises = new ArrayList<>();
     private Point playerStartPosition = new Point(0,0);
     private Finish finish;
     public enum Axis{X,Y}
@@ -78,7 +78,7 @@ public class Level {
     public ArrayList<Wall> getWalls() {
         return walls;
     }
-    public ArrayList<SupriseItem> getSuprises() { return suprises; }
+    public ArrayList<SurpriseItem> getSuprises() { return suprises; }
     public ArrayList<SecretWall> getSecretWalls() {
         return secretWalls;
     }
@@ -108,7 +108,7 @@ public class Level {
     }
     public void addSuprise(int x, int y){
         x=x*30;y=y*30;
-        var sup = new SupriseItem(x,y);
+        var sup = new SurpriseItem(x,y);
         hiddenSuprises.add(sup);
         suprises.add(sup);
     }

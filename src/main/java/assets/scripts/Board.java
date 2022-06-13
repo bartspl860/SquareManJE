@@ -18,6 +18,7 @@ public class Board extends JPanel implements ActionListener {
     private Player player;
     public ArrayList<Level> levels = new ArrayList<>();
     private int currentLevel = 0;
+    private Color boardColor = new Color(238,130,238);
     public void loadLevel(int level){
         Point playerStartPos;
         if(level >= levels.size() || level < 0){
@@ -41,7 +42,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void initBoard() {
         addKeyListener(new TAdapter());
-        setBackground(new Color(238,130,238));
+        setBackground(boardColor);
         setFocusable(true);
 
         player = new Player();
@@ -244,7 +245,7 @@ public class Board extends JPanel implements ActionListener {
                 audioManager.playClip("laugh");
                 var eh = new EffectHandler(200,
                         ()->setBackground(Color.RED),
-                        ()->setBackground(new Color(238,130,238)));
+                        ()->setBackground(boardColor));
                 if(player.getHealth() < 1){
                     loadLevel(0);
                     audioManager.playClip("fail");
@@ -274,23 +275,28 @@ public class Board extends JPanel implements ActionListener {
                 audioManager.playClip("beep");
                 var eh = new EffectHandler(200,
                         ()->setBackground(Color.GREEN),
-                        ()->setBackground(new Color(238,130,238)));
+                        ()->setBackground(boardColor));
             }
         }
 
-        var supriseIterator = level.getSuprises().iterator();
-        while(supriseIterator.hasNext()){
-            var suprise = supriseIterator.next();
+        var surpriseIterator = level.getSuprises().iterator();
+        while(surpriseIterator.hasNext()){
+            var suprise = surpriseIterator.next();
             if(player.isColliding(suprise)){
-                supriseIterator.remove();
-                var eh = new EffectHandler(5000,()->{
+                surpriseIterator.remove();
+                var eh = new EffectHandler(8000,()->{
                     Enemy.freeze = true;
-                    setBackground(Color.BLUE);
+                    boardColor = Color.BLUE;
+                    setBackground(boardColor);
                     audioManager.playClip("time_stop");
+                    audioManager.stopClip("ukulele");
+
                 },()->{
                     Enemy.freeze = false;
-                    setBackground(new Color(238,130,238));
+                    boardColor = new Color(238,130,238);
+                    setBackground(boardColor);
                     audioManager.playClip("time_continues");
+                    audioManager.playLoopClip("ukulele");
                 });
             }
         }
@@ -305,7 +311,7 @@ public class Board extends JPanel implements ActionListener {
                 var eh = new EffectHandler(200, ()->{
                     setBackground(Color.YELLOW);
                 },()->{
-                    setBackground(new Color(238,130,238));
+                    setBackground(boardColor);
                 });
             }
         }
@@ -342,21 +348,19 @@ public class Board extends JPanel implements ActionListener {
         }
     }
     private class TAdapter extends KeyAdapter {
-
         @Override
         public void keyReleased(KeyEvent e) {
             player.keyReleased(e);
         }
-
         @Override
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_1 -> loadLevel(0);
-                case KeyEvent.VK_2 -> loadLevel(1);
-                case KeyEvent.VK_3 -> loadLevel(2);
-                case KeyEvent.VK_4 -> loadLevel(3);
-            }
+//            switch (e.getKeyCode()){
+//                case KeyEvent.VK_1 -> { loadLevel(0); resetGame(); }
+//                case KeyEvent.VK_2 -> { loadLevel(1); resetGame(); }
+//                case KeyEvent.VK_3 -> { loadLevel(2); resetGame(); }
+//                case KeyEvent.VK_4 -> { loadLevel(3); resetGame(); }
+//            }
         }
     }
     private class EffectHandler implements ActionListener{

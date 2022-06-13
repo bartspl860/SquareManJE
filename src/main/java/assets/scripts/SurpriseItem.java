@@ -3,12 +3,12 @@ package assets.scripts;
 import javax.swing.*;
 import java.awt.*;
 
-public class SupriseItem extends Rectangle {
+public class SurpriseItem extends Rectangle {
     private Image sprite;
     public Image getSprite() {
         return sprite;
     }
-    public SupriseItem(int x ,int y){
+    public SurpriseItem(int x , int y){
         super(x,y,15,15);
         loadSprite("src/main/java/assets/sprites/watch.png");
     }
