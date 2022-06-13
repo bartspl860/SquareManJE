@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Enemy extends Rectangle {
+    public static boolean freeze = false;
     public boolean isRevarsable = true;
     private int speed = 2;
     private Image sprite;
@@ -55,6 +56,7 @@ public class Enemy extends Rectangle {
     }
     private boolean stepEnded = false;
     public void move() {
+        if(freeze) return;
         if (steps.isEmpty()) return;
 
         var step = steps.get(currentStep);

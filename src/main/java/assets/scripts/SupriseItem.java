@@ -8,14 +8,14 @@ public class SupriseItem extends Rectangle {
     public Image getSprite() {
         return sprite;
     }
-    public SupriseItem(int x ,int y, int w, int h){
-        super(x,y,w,h);
-        loadSprite("");
+    public SupriseItem(int x ,int y){
+        super(x,y,15,15);
+        loadSprite("src/main/java/assets/sprites/watch.png");
     }
     private void loadSprite(String path) {
         ImageIcon ii = new ImageIcon(path);
         sprite = ii.getImage();
-        width = sprite.getWidth(null);
-        height = sprite.getHeight(null);
+        width = sprite.getWidth(null) + 10;
+        height = sprite.getHeight(null) + 10;
     }
 }

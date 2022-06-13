@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class Board extends JPanel implements ActionListener {
-
     private AudioManager audioManager;
     private Timer timer;
     private final int DELAY = 10;
@@ -62,6 +61,8 @@ public class Board extends JPanel implements ActionListener {
         audioManager.addClip("coin", "src/main/java/assets/sounds/coin.wav");
         audioManager.addClip("fail", "src/main/java/assets/sounds/total-fail.wav");
         audioManager.addClip("magic", "src/main/java/assets/sounds/magic.wav");
+        audioManager.addClip("time_stop", "src/main/java/assets/sounds/wave2.wav");
+        audioManager.addClip("time_continues", "src/main/java/assets/sounds/Hero_Death_00.wav");
         audioManager.playLoopClip("ukulele");
     }
     @Override
@@ -83,7 +84,19 @@ public class Board extends JPanel implements ActionListener {
         drawWalls(g2d);
         drawFinish(g2d);
         drawHealthpacks(g2d);
+        drawSuprises(g2d);
         drawGUI(g2d);
+    }
+    private void drawSuprises(Graphics2D g2d){
+        for(var suprise : levels.get(currentLevel).getSuprises()){
+            g2d.drawImage(
+                suprise.getSprite(),
+                suprise.x,
+                suprise.y,
+                suprise.width,
+                suprise.height,
+                this);
+        }
     }
     private void drawNet(Graphics g){
         g.setFont(new Font("TimesRoman", Font.PLAIN, 8));
@@ -105,7 +118,7 @@ public class Board extends JPanel implements ActionListener {
     private void drawGUI(Graphics2D g2d){
         var logoIcon = new ImageIcon("src/main/java/assets/gui/squareman2.png");
         var logo = logoIcon.getImage();
-        g2d.drawImage(logo,10,0,307,54, this);
+        g2d.drawImage(logo,10,2,307,54, this);
 
         var heartIcon = new ImageIcon("src/main/java/assets/gui/health.png");
         var heart = heartIcon.getImage();
@@ -213,7 +226,6 @@ public class Board extends JPanel implements ActionListener {
                     this);
         }
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -266,6 +278,23 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
+        var supriseIterator = level.getSuprises().iterator();
+        while(supriseIterator.hasNext()){
+            var suprise = supriseIterator.next();
+            if(player.isColliding(suprise)){
+                supriseIterator.remove();
+                var eh = new EffectHandler(5000,()->{
+                    Enemy.freeze = true;
+                    setBackground(Color.BLUE);
+                    audioManager.playClip("time_stop");
+                },()->{
+                    Enemy.freeze = false;
+                    setBackground(new Color(238,130,238));
+                    audioManager.playClip("time_continues");
+                });
+            }
+        }
+
         var coinIterator = level.getCoins().iterator();
         while(coinIterator.hasNext()){
             var coin = coinIterator.next();
@@ -273,9 +302,11 @@ public class Board extends JPanel implements ActionListener {
                 coinIterator.remove();
                 player.addCoin();
                 audioManager.playClip("coin");
-                var eh = new EffectHandler(200,
-                                ()->setBackground(Color.YELLOW),
-                                ()->setBackground(new Color(238,130,238)));
+                var eh = new EffectHandler(200, ()->{
+                    setBackground(Color.YELLOW);
+                },()->{
+                    setBackground(new Color(238,130,238));
+                });
             }
         }
 
@@ -305,6 +336,7 @@ public class Board extends JPanel implements ActionListener {
         for(var localLevel : levels){
             localLevel.restoreHealthpacks();
             localLevel.restoreCoins();
+            localLevel.restoreSuprises();
             player.restoreHealth();
             player.resetCoins();
         }

@@ -8,9 +8,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main extends JFrame {
+public class MainWindow extends JFrame {
     private Board board;
-    public Main() {
+    public MainWindow() {
         initUI();
         initLVLS();
     }
@@ -177,7 +177,7 @@ public class Main extends JFrame {
         level3.addCoin(12,16);
         level3.addHealthPack(13,4);
         level3.addHealthPack(9,5);
-        level3.addHealthPack(3,7);
+        level3.addSuprise(3,7);
         level3.setPlayerStartPosition(new Point(0,3));
         level3.addFinish(19,16,1,3,Color.CYAN);
         {
@@ -272,7 +272,7 @@ public class Main extends JFrame {
     }
     public static void main(String[] args) throws IOException {
         EventQueue.invokeLater(() -> {
-            Main ex = new Main();
+            MainWindow ex = new MainWindow();
             ex.setVisible(true);
         });
     }

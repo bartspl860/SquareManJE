@@ -13,6 +13,8 @@ public class Level {
     private ArrayList<Healthpack> hiddenHealthpacks = new ArrayList<>();
     private ArrayList<Coin> coins = new ArrayList<>();
     private ArrayList<Coin> hiddenCoins = new ArrayList<>();
+    private ArrayList<SupriseItem> suprises = new ArrayList<>();
+    private ArrayList<SupriseItem> hiddenSuprises = new ArrayList<>();
     private Point playerStartPosition = new Point(0,0);
     private Finish finish;
     public enum Axis{X,Y}
@@ -67,19 +69,18 @@ public class Level {
         coins.add(new Coin(x*30+7,y*30+7));
         hiddenCoins.add(new Coin(x*30+7,y*30+7));
     }
+    public Finish getFinish() {
+        return finish;
+    }
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
     public ArrayList<Wall> getWalls() {
         return walls;
     }
-
+    public ArrayList<SupriseItem> getSuprises() { return suprises; }
     public ArrayList<SecretWall> getSecretWalls() {
         return secretWalls;
-    }
-
-    public Finish getFinish() {
-        return finish;
     }
     public ArrayList<Healthpack> getHealthpacks() {
         return healthpacks;
@@ -96,11 +97,21 @@ public class Level {
             coins.add(new Coin(coin.x,coin.y));
         }
     }
-
+    public void restoreSuprises(){
+        suprises.clear();
+        for(var item : hiddenSuprises){
+            suprises.add(item);
+        }
+    }
     public ArrayList<Coin> getCoins() {
         return coins;
     }
-
+    public void addSuprise(int x, int y){
+        x=x*30;y=y*30;
+        var sup = new SupriseItem(x,y);
+        hiddenSuprises.add(sup);
+        suprises.add(sup);
+    }
     private static int instanceCounter;
     static {
         instanceCounter = 1;
